@@ -3,6 +3,7 @@ CIFAR-10 数据加载模块
 用于ID数据训练和测试
 """
 
+import os
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 
@@ -11,12 +12,17 @@ def get_cifar10(batch_size):
     transform = transforms.Compose([
         transforms.ToTensor(),
     ])
+    data_root = './../data'
+    
+    cifar_path = os.path.join(data_root, 'cifar-10-batches-py')
 
+    # 如果目录不存在，则下载；否则不下载
+    need_download = not os.path.exists(cifar_path)
     # 训练集
     train = datasets.CIFAR10(
         root='./data',
         train=True,
-        download=True,
+        download=need_download,
         transform=transform
     )
 
@@ -24,7 +30,7 @@ def get_cifar10(batch_size):
     test = datasets.CIFAR10(
         root='./data',
         train=False,
-        download=True,
+        download=need_download,
         transform=transform
     )
 

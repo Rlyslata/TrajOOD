@@ -1,3 +1,6 @@
+from traj_ood.models import hook, traj_encoder
+
+
 all_feats = []
 all_labels = []
 
