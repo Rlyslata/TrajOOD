@@ -1,0 +1,21 @@
+# 随机种子（保证实验可复现）
+seed: 42
+
+# 运行设备
+device: cuda
+
+dataset:
+  id: cifar10      # ID数据集
+  ood: svhn        # OOD数据集
+  batch_size: 128
+
+model:
+  backbone: resnet18
+  num_classes: 10  # CIFAR-10类别数
+
+trajectory:
+  use_delta: true  # 是否使用Δ特征（关键设计）
+  feat_dim: 512    # backbone输出特征维度
+
+fusion:
+  lambda: 0.5      # S1和S2融合权重
