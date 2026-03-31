@@ -26,10 +26,10 @@ def get_scores(model, loader, hook, traj_builder, traj_encoder, gaussian, device
             s1 = energy_score(logits)
 
             # 构建轨迹
-            traj = traj_builder.build(hook.features)
+            traj = traj_builder.forward(hook.features).to(device)
 
             # 编码
-            z = traj_encoder(traj)
+            z = traj_encoder(traj).to(device)
 
             # S2: Gaussian
             s2 = gaussian.score(z)

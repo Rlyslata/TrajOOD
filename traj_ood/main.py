@@ -41,11 +41,10 @@ def main():
     hook = FeatureHook(model)
 
     # ====== 构建轨迹 ======
-    traj_builder = TrajectoryBuilder(use_delta=True)
-
+    traj_builder = TrajectoryBuilder(use_delta=True).to(device)
     # ====== 轨迹编码器 ======
     # 先用简单MLP baseline
-    traj_encoder = TrajMLP(input_dim=512 * len(hook.handles)).to(device)
+    traj_encoder = TrajMLP().to(device)
 
     # ====== 提取训练特征（用于Gaussian） ======
     print("\n=== Extracting Trajectory Features ===")
@@ -63,7 +62,7 @@ def main():
 
             _ = model(x)
 
-            traj = traj_builder.build(hook.features)
+            traj = traj_builder.forward(hook.features).to(device)
 
             z = traj_encoder(traj)
 

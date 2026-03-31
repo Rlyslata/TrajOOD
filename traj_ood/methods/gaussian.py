@@ -46,12 +46,12 @@ class GaussianModel:
         """
 
         scores = []
-
+        
         for c in self.means:
-            mu = self.means[c]
-
+            mu = self.means[c].to(x.device)
+            cov_inv = self.cov_inv.to(x.device)
             diff = x - mu
-            dist = torch.sum(diff @ self.cov_inv * diff, dim=1)
+            dist = torch.sum(diff @ cov_inv * diff, dim=1)
 
             scores.append(dist.unsqueeze(1))
 

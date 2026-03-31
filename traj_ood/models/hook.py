@@ -14,7 +14,7 @@ class FeatureHook:
         """
         self.features = []   # 存储每一层输出
         self.handles = []
-
+        self.device = next(model.parameters()).device
         # 遍历所有模块
         for name, module in model.named_modules():
             # 选择ResNet的layer层（避免conv级别过细）
@@ -36,7 +36,7 @@ class FeatureHook:
             output = output.mean(dim=[2, 3])  # GAP
 
         # 存储特征
-        self.features.append(output)
+        self.features.append(output.detach())
 
     def clear(self):
         """每次forward前清空"""

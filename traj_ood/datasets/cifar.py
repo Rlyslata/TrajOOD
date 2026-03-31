@@ -12,15 +12,16 @@ def get_cifar10(batch_size):
     transform = transforms.Compose([
         transforms.ToTensor(),
     ])
-    data_root = './../data'
+    data_root = './data'
     
     cifar_path = os.path.join(data_root, 'cifar-10-batches-py')
 
     # 如果目录不存在，则下载；否则不下载
     need_download = not os.path.exists(cifar_path)
+    print(f"Checking CIFAR-10 dataset... {'Downloading...' if need_download else 'Found, skipping download.'}")
     # 训练集
     train = datasets.CIFAR10(
-        root='./data',
+        root=data_root,
         train=True,
         download=need_download,
         transform=transform
@@ -28,7 +29,7 @@ def get_cifar10(batch_size):
 
     # 测试集（用于ID评估）
     test = datasets.CIFAR10(
-        root='./data',
+        root=data_root,
         train=False,
         download=need_download,
         transform=transform
